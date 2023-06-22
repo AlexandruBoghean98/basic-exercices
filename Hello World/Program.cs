@@ -6,7 +6,7 @@ namespace Hello_World
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Orice schimbare vrea shtiuletele meu");
+            Console.WriteLine("Incerc sa ma joc cu branch-urile");
             
         }
     }
