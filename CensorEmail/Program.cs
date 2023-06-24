@@ -22,9 +22,9 @@ public class CensorEmail
     {
         int arondIndex = userEmail.IndexOf('@');
 
-        string localPart = userEmail.Substring(0, arondIndex);
+        string username = userEmail.Substring(0, arondIndex);
         string domain = userEmail.Substring(arondIndex);
-        string censoredAdress = new string('*', localPart.Length);
+        string censoredAdress = new string('*', username.Length);
 
         return censoredAdress + domain;
     }
@@ -34,10 +34,10 @@ public class CensorEmail
         if(adress != null && adress.Count(c => c == '@') == 1)
         {
 
-            var localPart = ValidateLocalPart(adress);
+            var username = ValidateLocalPart(adress);
             var domaine = ValidateEmailDomaine(adress);
 
-            return localPart && domaine;
+            return username && domaine;
         }
 
         Console.WriteLine("You entered an invalid email, or the email is in wrong format!");
@@ -57,10 +57,10 @@ public class CensorEmail
 
     private static bool ValidateLocalPart(string adress)
     {
-        var localPart = adress.Substring(0, adress.IndexOf('@'));
+        var username = adress.Substring(0, adress.IndexOf('@'));
         char[] unallowed = { '\"', '(', ')', ',', ':', ';', '<', '>', '@', '[', '\\', ']' };
 
-        foreach (char c in localPart)
+        foreach (char c in username)
         {
             if (Array.IndexOf(unallowed, c) != -1)
                 return false;
