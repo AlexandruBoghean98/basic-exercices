@@ -7,8 +7,8 @@ public class CensorEmail
     public static void Main()
     {
         Console.Write("Your email adress is: ");
-        string userEmail = Console.ReadLine();
-        bool approveEmail = ValidateEmail(userEmail);
+        var userEmail = Console.ReadLine();
+        var approveEmail = ValidateEmail(userEmail);
 
         if(approveEmail) 
         {
@@ -20,11 +20,11 @@ public class CensorEmail
 
     private static string Censorship(string userEmail)
     {
-        int arondIndex = userEmail.IndexOf('@');
+        var arondIndex = userEmail.IndexOf('@');
 
-        string username = userEmail.Substring(0, arondIndex);
-        string domain = userEmail.Substring(arondIndex);
-        string censoredAdress = new string('*', username.Length);
+        var username = userEmail.Substring(0, arondIndex);
+        var domain = userEmail.Substring(arondIndex);
+        var censoredAdress = new string('*', username.Length);
 
         return censoredAdress + domain;
     }
@@ -34,8 +34,8 @@ public class CensorEmail
         if(adress != null && adress.Count(c => c == '@') == 1)
         {
 
-            var username = ValidateLocalPart(adress);
-            var domaine = ValidateEmailDomaine(adress);
+            var username = ValidateUserName(adress);
+            var domaine = ValidateDomaine(adress);
 
             return username && domaine;
         }
@@ -44,18 +44,18 @@ public class CensorEmail
         return false;
     }
 
-    private static bool ValidateEmailDomaine(string adress)
+    private static bool ValidateDomaine(string adress)
     {
         var domain = adress.Substring(adress.IndexOf('@') + 1);
         if(domain.Count(c => c == '.') == 1)
         {
-            return PointPosition(domain, '.') && OnlyLettersDomain(domain);
+            return PointPosition(domain) && OnlyLettersDomain(domain);
         }
 
         return false;
     }
 
-    private static bool ValidateLocalPart(string adress)
+    private static bool ValidateUserName(string adress)
     {
         var username = adress.Substring(0, adress.IndexOf('@'));
         char[] unallowed = { '\"', '(', ')', ',', ':', ';', '<', '>', '@', '[', '\\', ']' };
@@ -69,9 +69,9 @@ public class CensorEmail
         return true;
     }
 
-    private static bool PointPosition(string domain, char point)
+    private static bool PointPosition(string domain)
     {
-        return (domain.IndexOf(point) != 0 && domain.IndexOf(point) != domain.Length - 1);
+        return (domain.IndexOf('.') != 0 && domain.IndexOf('.') != domain.Length - 1);
     }
 
     private static bool OnlyLettersDomain(string domain)
